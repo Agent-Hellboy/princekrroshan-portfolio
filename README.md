@@ -4,7 +4,8 @@ sudo docker-compose down --remove-orphans  && sudo docker-compose up -d --force-
 
 
 # testing 
-client 
+## client 
+
 docker build -t myreactapp .
 docker run -d -p 3000:3000 myreactapp
 
