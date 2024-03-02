@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+
+  postgresdb:
+    image: postgres
+    container_name: postgresdb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+
+  webapp:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: mywebapp
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+      - postgresdb
+
+  reactapp:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: myreactapp
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - webapp
+
+volumes:
+  mongodb_data:
+  postgres_data:
