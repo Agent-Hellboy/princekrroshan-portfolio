@@ -6,29 +6,9 @@ on:
       - main
 
 jobs:
-  build:
+  echo:
+    name: Echo
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
-
-      - name: Deploy to server
-        uses: easingthemes/ssh-deploy@v2
-        with:
-          server_ip: ${{ secrets.SERVER_IP }}
-          server_username: ${{ secrets.SERVER_USERNAME }}
-          server_port: ${{ secrets.SERVER_PORT }}
-          local_path: ./
-          remote_path: /path/to/deploy
+      - name: Echo
+        run: echo "Server CI/CD Pipeline"
